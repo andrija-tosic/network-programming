@@ -7,7 +7,7 @@
 #include "../socket_funkcije.h"
 
 #define SERVER_PORT 80
-#define BUF_SIZE 2048
+#define BUF_SIZE 1024
 
 WSAData wsa;
 SOCKET listening_socket;
@@ -24,6 +24,7 @@ int main() {
 	accept_socket(listening_socket, client_socket, client_addr);
 
 	char request[BUF_SIZE];
+	memset(request, 0, BUF_SIZE);
 
 	recv_data(client_socket, request, BUF_SIZE);
 
@@ -55,7 +56,7 @@ int main() {
 	if (!slika.is_open()) {
 		std::cout << "failed to open file" << std::endl;
 
-		std::string err400 =
+		std::string err404 =
 			"HTTP/1.1 404 Not Found\r\nContent-Type: text/html\r\n";
 
 		std::cin.get();
@@ -74,28 +75,28 @@ int main() {
 	}
 
 	std::string ok = "HTTP/1.1 200 OK\r\nContent-Length: " + std::to_string(file_size)
-		+ "\r\nConnection: keep-alive\r\nContent-Type: image/png\r\n\r\n";
+		+ "\r\nConnection: close\r\nContent-Type: image/png\r\n\r\n";
 
 	send_data(client_socket, ok.c_str(), ok.size() + 1);
 
 	char buff[BUF_SIZE];
 
-		std::cout << "filesize: " << file_size << std::endl;
+	std::cout << "filesize: " << file_size << std::endl;
 
-		size_t sent = 0;
+	size_t sent = 0;
 	do
 	{
-		if (!slika.read(buff, min(file_size, BUF_SIZE))) {
+		if (!slika.read(buff, min(BUF_SIZE, file_size - sent))) {
 			break;
 		}
 		int bytes = slika.gcount();
-		std::cout << "bytes to send: " << bytes << std::endl;
 		if (send_data(client_socket, buff, bytes) == -1) {
 			break;
 		}
 		sent += bytes;
 		std::cout << "sent " << sent << " bytes" << std::endl;
 	} while (sent < file_size);
+
 
 	closesocket(client_socket);
 	closesocket(listening_socket);

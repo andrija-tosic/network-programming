@@ -11,7 +11,7 @@ void printMessage(const char* message) {
 int send_data(SOCKET s, const char* data, int size) {
 	int sent = 0;
 	while (sent < size) {
-		int bytes = send(s, data + sent, size, NULL);
+		int bytes = send(s, data + sent, BUF_SIZE, NULL);
 		if (bytes <= 0)
 			return -1;
 
