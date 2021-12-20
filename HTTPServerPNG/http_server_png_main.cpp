@@ -52,7 +52,7 @@ int main() {
 		return -1;
 	}
 
-	std::ifstream slika(filePath, std::ios::binary);
+	std::ifstream slika(filePath, std::ifstream::binary);
 	if (!slika.is_open()) {
 		std::cout << "failed to open file" << std::endl;
 
@@ -75,7 +75,7 @@ int main() {
 	}
 
 	std::string ok = "HTTP/1.1 200 OK\r\nContent-Length: " + std::to_string(file_size)
-		+ "\r\nConnection: close\r\nContent-Type: image/png\r\n\r\n";
+		+ "\r\nContent-Type: image/png\r\n\r\n";
 
 	send_data(client_socket, ok.c_str(), ok.size() + 1);
 
