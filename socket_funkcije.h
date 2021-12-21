@@ -10,27 +10,34 @@ void printMessage(const char* message) {
 
 int send_data(SOCKET s, const char* data, int size) {
 	int sent = 0;
-	while (sent < size) {
-		int bytes = send(s, data + sent, BUF_SIZE, NULL);
-		if (bytes <= 0)
-			return -1;
+	do {
+		int send_size = send(s, data + sent, size - sent, NULL);
 
-		sent += bytes;
-	}
+		if (send_size <= 0) {
+			printError("send() failed");
+			return -1;
+		}
+
+		sent += send_size;
+
+	} while (sent < size);
 }
 
 int recv_data(SOCKET s, char* data, int size) {
-	int recv_size;
+	int recieved = 0;
+	int recv_size = 0;
 	do
 	{
-		recv_size = recv(s, data, size, NULL);
+		int recv_size = recv(s, data + recieved, size - recieved, NULL);
 
-		if (recv_size < 0) {
+		if (recv_size <= 0) {
 			printError("recv() failed");
 			return -1;
 		}
 
-	} while (recv_size == size);
+		recieved += recv_size;
+
+	} while (recv_size > 0);
 }
 
 void init(WSAData& wsa) {
@@ -39,7 +46,7 @@ void init(WSAData& wsa) {
 		printError("Startup failed.");
 }
 
-void create_socket(SOCKET& listening_socket) {
+void create_stream_socket(SOCKET& listening_socket) {
 	// Kreiranje listen soketa
 	if ((listening_socket = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
 		printError("Listening socket not created");

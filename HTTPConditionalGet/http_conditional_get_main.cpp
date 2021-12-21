@@ -15,7 +15,7 @@ sockaddr_in server_addr;
 
 int main() {
 	init(wsa);
-	create_socket(listening_socket);
+	create_stream_socket(listening_socket);
 	connect_socket(listening_socket, server_addr, "127.0.0.1", SERVER_PORT);
 
 	std::string adr_objekta;

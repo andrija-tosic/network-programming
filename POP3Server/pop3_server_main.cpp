@@ -19,7 +19,7 @@ SOCKET client_socket;
 int main() {
 
 	init(wsa);
-	create_socket(listening_socket);
+	create_stream_socket(listening_socket);
 	bind_socket(listening_socket, server, 110);
 	listen_socket(listening_socket);
 	accept_socket(listening_socket, client_socket, client_addr);

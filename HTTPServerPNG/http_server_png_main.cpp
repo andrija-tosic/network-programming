@@ -7,7 +7,7 @@
 #include "../socket_funkcije.h"
 
 #define SERVER_PORT 80
-#define BUF_SIZE 1024
+#define BUF_SIZE 4096
 
 WSAData wsa;
 SOCKET listening_socket;
@@ -18,7 +18,7 @@ int cLen = sizeof(struct sockaddr_in);
 
 int main() {
 	init(wsa);
-	create_socket(listening_socket);
+	create_stream_socket(listening_socket);
 	bind_socket(listening_socket, server, SERVER_PORT);
 	listen_socket(listening_socket);
 	accept_socket(listening_socket, client_socket, client_addr);
@@ -38,7 +38,7 @@ int main() {
 	}
 	else {
 		std::string err400 =
-			"HTTP/1.1 400 Bad Request\r\nContent-Type: text/html\r\n";
+			"HTTP/1.1 400 Bad Request\r\nContent-Type: text/html\r\n\r\n";
 
 		std::cin.get();
 		return -1;
@@ -46,7 +46,7 @@ int main() {
 
 	if (req.find("HTTP/1.1") == -1) {
 		std::string err505 =
-			"HTTP/1.1 505 HTTP Version Not Supported\r\nContent-Type: text/html\r\n";
+			"HTTP/1.1 505 HTTP Version Not Supported\r\nContent-Type: text/html\r\n\r\n";
 
 		std::cin.get();
 		return -1;
@@ -57,7 +57,7 @@ int main() {
 		std::cout << "failed to open file" << std::endl;
 
 		std::string err404 =
-			"HTTP/1.1 404 Not Found\r\nContent-Type: text/html\r\n";
+			"HTTP/1.1 404 Not Found\r\nContent-Type: text/html\r\n\r\n";
 
 		std::cin.get();
 		return -1;
@@ -77,27 +77,23 @@ int main() {
 	std::string ok = "HTTP/1.1 200 OK\r\nContent-Length: " + std::to_string(file_size)
 		+ "\r\nConnection: close\r\nContent-Type: image/png\r\n\r\n";
 
-	send_data(client_socket, ok.c_str(), ok.size() + 1);
+	send_data(client_socket, ok.c_str(), ok.size());
 
-	char buff[BUF_SIZE];
 
 	std::cout << "filesize: " << file_size << std::endl;
 
-	size_t sent = 0;
-	do
-	{
-		if (!slika.read(buff, min(BUF_SIZE, file_size - sent))) {
-			break;
-		}
-		int bytes = slika.gcount();
-		if (send_data(client_socket, buff, bytes) == -1) {
-			break;
-		}
-		sent += bytes;
+	char buff[BUF_SIZE];
+
+	int sent = 0;
+	do {
+		slika.read(buff, min(BUF_SIZE, file_size - sent));
+		int bytes_read = slika.gcount();
+		send_data(client_socket, buff, bytes_read);
+		sent += bytes_read;
 		std::cout << "sent " << sent << " bytes" << std::endl;
 	} while (sent < file_size);
 
-
+	slika.close();
 	closesocket(client_socket);
 	closesocket(listening_socket);
 	WSACleanup();
