@@ -5,7 +5,7 @@ void printError(const char* message) {
 	std::cin.get();
 }
 void printMessage(const char* message) {
-	std::cout << "Primljeno: " << message << std::endl;
+	std::cout << "==========Primljeno=============\n" << message << "\n=================================\n";
 }
 
 int send_data(SOCKET s, const char* data, int size) {

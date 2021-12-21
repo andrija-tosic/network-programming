@@ -25,15 +25,17 @@ int main() {
 	accept_socket(listening_socket, client_socket, client_addr);
 
 	std::vector<std::string> poruke = {
-		"poruka 11",
-		"poruka 222222",
-		"poruka 33333333333333"
+		"prva 1",
+		"druga 2",
+		"treca 3"
 	};
 
 	const char* server_ready = "+OK POP3 server ready";
 
+
 	send_data(client_socket, server_ready, strlen(server_ready) + 1);
 
+	/*
 	char recv_username[80];
 	char recv_password[80];
 
@@ -48,6 +50,8 @@ int main() {
 	const char* login_success = "+OK user successfully logged on";
 
 	send_data(client_socket, login_success, strlen(login_success) + 1);
+
+	*/
 
 	while (true)
 	{
@@ -85,13 +89,26 @@ int main() {
 			send_data(client_socket, list_response.c_str(), list_response.size() + 1);
 		}
 		else if (recv_string.substr(0, 4) == "retr") {
-			int msg_number = std::stoi(recv_string.substr(5, 6)) - 1;
+			int msg_number = std::stoi(recv_string.substr(5, 6));
 
-			std::string msg = "+OK " + std::to_string(poruke[msg_number].size()) + " octets\n";
+			int index = msg_number - 1;
 
-			msg += poruke[msg_number] + "\n.";
+			if (index < 0 || index >= poruke.size()) {
+				std::string msg = "-ERR No such message\n";
+				send_data(client_socket, msg.c_str(), msg.size() + 1);
+			}
+			else {
+				std::string msg = "+OK " + std::to_string(poruke[index].size()) + " octets\n";
 
-			send_data(client_socket, msg.c_str(), msg.size() + 1);
+				msg += poruke[index] + "\n.\n";
+
+				msg += "+OK message deleted\n";
+
+				poruke.erase(poruke.begin() + index);
+
+				send_data(client_socket, msg.c_str(), msg.size() + 1);
+			}
+
 		}
 		else if (recv_string.substr(0, 4) == "dele") {
 			send_data(client_socket, "+OK message deleted", sizeof("+OK message deleted"));
