@@ -1,0 +1,26 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "d0e53924-4afc-4cd9-8184-fa72508f5573": {
+      "ProjectGuid": "d0e53924-4afc-4cd9-8184-fa72508f5573",
+      "DisplayName": "OperationCGI",
+      "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "7b4d1f06-8749-463a-8353-63cd3f15ff85": {
+      "ProjectGuid": "7b4d1f06-8749-463a-8353-63cd3f15ff85",
+      "DisplayName": "ParityCGI",
+      "ColorIndex": 1
+    },
+    "64bfbc6d-ff5a-49fe-b4a2-64515a942374": {
+      "ProjectGuid": "64bfbc6d-ff5a-49fe-b4a2-64515a942374",
+      "DisplayName": "ImageCGI",
+      "ColorIndex": 2
+    }
+  },
+  "NextColorIndex": 3
+}

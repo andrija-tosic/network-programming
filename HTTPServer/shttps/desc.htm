@@ -1,0 +1,649 @@
+<html><head>
+<style>
+font.h{font-size:9pt; line-height:10pt}
+</style>
+</head><body bgcolor=#ffffff text=#000000><center><h1>Small HTTP server</h1></center>
+<p><a name=C></a><H3>Contents</h3><table cellspacing=3 cellpadding=8 border=0 width=100%><tr valign=top><td>
+<ul><li><a href=#W>What's this?</a>
+<li><a href=license.txt">License.</a>
+<li><a href=#W1>Capabilities</a>
+<li><a href=#h>How to...?</a>
+<li><a href=#h1>Directories and files names</a>
+<li><a href=#h2>Options and command line parameters</a>
+<li><a href=#h3>Running scripts</a>
+<li><a href=#S>Server Side Includes (SSI)</a>
+<li><a href=#I>Internet Server Applications (ISAPI)</a>
+<li><a href=#P>Proxy server</a>
+<li><a href=#D>DNS server</a>
+<li><a href=#M>SMTP server</a>
+<li><a href=#P>POP3 server & proxy</a>
+<li><a href=#F>FTP server & proxy</a>
+<li><a href=#T>TLS/SSL server</a>
+<li><a href=#L>Conclusion.</a>
+</ul></td><td><ul><ul><ul>&nbsp; </ul></ul></ul></td>
+<td align=left bgcolor=#e0fff0 width=20%><center><h4>If server works it's available:</h4></center>
+<font size=2 class=h><b>
+<a href=http://127.0.0.1/$_admin_$conf>Setting / Current state</a><br>
+<a href=http://127.0.0.1/$_admin_$host>Users & Virtual Hosts</a><br>
+<a href=http://127.0.0.1/$_admin_$state>Current statistics</a>
+<hr><center>Online:</center>
+<a href=http://srv.mf.inc.ru/news.htm>What's new?</a><br></b>(Last version, Forum, etc.)<br>
+<b><a href=http://srv.mf.inc.ru/webmail.exe>Download Web Mail</a><br></b>An external script gives Web intrface for working with mail</sup><br>
+<b><a href=http://srv.mf.inc.ru/sendmail.exe>Download Sendmail emulator</a><br></b></sup><br>
+<b><a href=http://srv.mf.inc.ru/reg2.cgi>Registration.</a><br>
+<a href=mailto:max@mf.inc.ru>E-mail...</a>
+</b></font></td></tr></table>
+
+<br><hr><a name=W></a><center><br><h2>What's this?</h2></center>
+<p> This very small utility turns your computer into a fully functional
+Web-server. The program itself requires a minimal set of system resources, so
+the server's functioning doesn't influence your computer's performance. This
+server can function under a LAN networking or even under a Dial-Up
+networking. Webmasters can run this utility on their local computers and
+debug their CGI-scripts without going on-line.
+<a name=W1><p></a><p> This is probably the smallest HTTP server, but you shouldn't
+underestimate its capabilities.
+<br><center><h2>Capabilities.</h2></center><ul>
+<li>GET,POST,HEAD methods support (HTTP/1.0 - 1.1)
+<li>Multitasking. -- simultaneous data transfer and requests reception from
+several remote users with a delay depending on the channel's quality.
+<li>High performance. The server transfers data without any delay.
+<li>CGI-scripts available:
+<ul>
+<li>PE *.exe Windows format.
+<li>MZ *.exe DOS format.
+<li>*.com DOS format.
+<li>perl-scripts (with an external perl-interpreter).
+<li>phtml-pages (with an external <a href=http://www.php.net>PHP</a>-interpreter).
+<li>applets of Windows associated file types.
+</ul>
+<li>Server Side Includes (SSI).
+<li>Internet Server Applications ISAPI).
+<li>Dynamical output of information about requests. The 16 Kb cache is
+provided for the log. After its overflow earlier data are replaced by
+newer ones. The "save" option writes every 4 Kb of the protocol on your hard disk.
+<li>Requests control protects your information.
+<li>Simple installation.
+</ul>
+ Compactness is one of the greatest features of this product. Its
+functioning doesn't obstruct your work. This server uses a minimal set of
+system resources necessary for a quick data transfer.
+
+<p><a href=#C>Contents</a><hr><center><a name=h></a><br><h2>How to...?</h2></center>
+ Well, it is fairly easy - setup it by running shttp3.exe. Select target
+folder, check "Update entry in main menu", enter user name and password for
+administration. Press "Install." After installation, run "Small HTTP server"
+and go to <A href=http://127.0.0.1/$_admin_$conf>Setting / Current state</a> to option your server.
+<br> You can go to your web server from local PC use <a href=http://127.0.0.1/>http://127.0.0.1/</a>.
+ If you don't have DNS name, that's not a big problem. Any user can go to
+your web site by entering your IP address. You can also add your site to
+search engines applying the IP address as the URL.<br>
+
+<center><a name=h1><p></a><br><h2>Directories and files names.</h2></center>
+ The server works with certain directories and files names. Your
+site is supposed to be in the directory specified during settings (WWW by
+default). The files that contents CGI identefer in pathname are files to run. By
+default CGI identefer is \cgi-bin\, when server receives a request for file
+in CGI-BIN directory, it tries to execute it.
+If the requested file ends in .pl, the PERL interpreter is called. If the requested file ends
+in .phtml, .pht, .php, the PHP interpreter runs this file. For example, if
+you installed the server in c:\http, then files in c:\http\www can be
+accessed, i.e. a user types http://Your_IP_address_here/test.html, he or she
+will see c:\http\www\test.html file. CGI scripts are in c:\http\www\CGI-BIN.
+If you create IMAGES sub-folder in WWW folder and put bgr.gif there, it can
+be accessed by http://Your_IP_address/IMAGES/bgr.gif. Anyway, if the
+file name is not specified, i.e. the request ends in '/', the server will
+show the default file which name was specified either during setting.
+For instance, http://127.0.0.1/My/ is equal to http://127.0.0.1/My/index.htm.
+Server can support many virtual hosts. Each virtual host has its own root
+directory, and also can include virtual directories common for all.
+<p> ASIS files also support. Those files content HTTP header in the beginning.
+Such files are being used for redirect inbound request to other site. This
+file must begins with keyword "Status: " after this returning code and your
+header is going. After header one line is empty, and data. Extension must be
+<b>.asi</b> or <b>.asis</b><br>
+
+<p><a href=#C>Contents</a><hr><center><a name=h2><p></a><br><h2>Options and command line parameters.</h2></center>
+ You can option server via dialog box "<b><u>S</u>ettings..</b>", via Web interface
+if remote administration is enabled, or you can manual edit <i>http.cfg</i>
+or just add parameters to command line. In many case you don't need to change
+settings manually but if you really want to, you can do with next keys.
+<table border=1><tr bgcolor=#c0f0ff align=center><td><b>Parametr and comment</b></td><td><b>Key</b></td></tr>
+<tr align=center bgcolor=#c0fff8><td colspan=2><b>General Setting</td></tr>
+<tr><td><b>Disable icon in notification area.</b> Don't add icon into systrey (server's window always in back).
+In this case to get access to administration dialog box you must: To get
+server window you can press Ctrl-Alt-Del to open task manager, in task
+manager select HTTP, and try to kill it. Server will ask you "Do you want
+to close HTTP server?", -- If you reply "No" server show window. In server
+window's select system menu (Right button on title) and select advanced
+item "Server" Also if server is runed as NT service you may open server's
+window by Pause/Continue button in Service Control Manatger.
+</td><td><b>noicon</b></td></tr>
+<tr><td><b>Minimize on startup.</b></td><td><b>hide</b></td></tr>
+<tr><td><b>Create detailed log for POP/SMTP/FTP.</b> (By default only basic events are added to the log).</td><td><b>detail</b></td></tr>
+<tr><td><b>Disable saving log.</b></td><td><b>nolog</b></td></tr>
+<tr><td><b>Log filename.</b></td><td><b>log=<i>name.log</i></b></td></tr>
+<tr><td><b>Create a daily log (new log created after each day).</b>It's necessary to get statistics for a day. Server will every day rename old log file (add date to name). It's necessary to get statistics for a day.</td><td><b>logday</b></td></tr>
+<tr><td><b>Enable remote administration.</b> Otherwise, only statistics will be available for administrators.</td><td><b>radmin</b></td></tr>
+<tr><td><b>Number of simultaneous requests from each host.
+</b>You can restrict number of simulate
+request from the same host. Usually one browser creates four simulate
+connections. Some browsers try to create much more simulate connections.
+This restriction includes all TCP connections (HTTP,FTP,POP,SMTP,Proxy)</td><td><b>from_same_host=##</b></td></tr>
+<tr><td><b>IPs that can access this server. Separe single IP by comma and IP ranges with hyphens.</td><td><b>ip_range={#.#.#.#[-#.#.#.#],}</b></td></tr>
+<tr><td><b>Deny IPs that can't access this server. Separe single IP by comma and IP ranges with hyphens.</td><td><b>ip_deny={#.#.#.#[-#.#.#.#],}</b></td></tr>
+
+<tr align=center bgcolor=#c0fff8><td colspan=2><b>HTTP server</b></td></tr>
+<tr><td><b>TCP/IP port for HTTP server.</b> Usually it's 80</td><td><b>port=##</b></td></tr>
+<tr><td><b>Number of HTTP requests working simultaneous.</b>
+Approcsimately 20Kb of memory is reserved for each thread. Usually 12 connections are enought for 3-8 visitors per minute.</td><td>
+<b>max=##</b></td></tr>
+<tr><td><b>Default file name.</b> Name when requested URL finished by "/".
+(Wildcards are accepted, such as index.* to allow any index file in folder)</td><td><b>def=<i>name.ext</i></b></td></tr>
+<tr><td><b>Error file.</b> Full path to file or script that will be returned if requested file is not found. For CGI or SSI QUERY_STRING variable will contents the name of requested file.</b></td><td><b>error=<i>path\name.ext</i></b></td></tr>
+<tr><td><b>Default web foulder.</b></td><td><b>dir=<i>root_dir_name</i></b></td></tr>
+<tr><td><b>CGI ident.</b>The part of a URL that indicates a CGI script. Default is "\cgi-bin\", but you could use e.g. "\cgi-", "\local-bin\", ".cgi", etc.</b></td><td><b>cgi_ident=<i>"\cgi-bin\"</i></b>
+<tr><td><b>PERL interpreter.</b> Interpreter for scripts with .pl extension</td><td><b>perl=<i>path\name.exe</i></b></td></tr>
+<tr><td><b>Share dir.</b> If you want this dir to be CGI current dir always, direct it here. Otherwise CGI current dir will be CGI script dir.</td><td><b>share=<i>path</i></b></td></tr>
+<tr><td><b>Enable Server Side Includes (SSI) checking in HTML files. By default SSI checking in .sht*,.sml*,.asp* files only.  Warning: SSI processing uses more memory,
+and and creates a small delay</td><td><b>ssihtm</b></td></tr>
+<tr><td>Key to check SSI in .sht*,.sml*,.asp* files only.</td><td><b>nossihtm</b></td></tr>
+<tr><td><b>Limit bytes received by POST method to.</b>
+Note: Large value may use excessive PC and network resources.</td><td><b>post_limit=##</b></td></tr>
+<tr><td><b>Never execute .htm,.gif,.jpg files.</b> Otherwise, server trays to run any file with CGI ident.</td><td><b>norunhtm</b></td></tr>
+<tr><td><b>Limit CGI execution time.</b> (in seconds)</td><td><b>cgi_timeout=##</b></td></tr>
+<tr><td colspan=2><center><b>CGI interpreters</b></center>
+ Application or DLL which runs when specific CGI-file is requested.
+E.g. for <i>.sh -- d:\gnu\bin\bash.exe</i>, for <i>.cgi -- d:\perl\perlis.dll</i>.
+<div align=right><b>ext="<i>.ext;application;.ext;application;...</i>"</b></div></td></tr>
+<tr><td colspan=2><center><b>Mime types</b></center>
+Define extended mime type for extension. E.g. for <i>.bmp</i> mime type may be <i>image/bitmap</i>
+<div align=right><b>mime="<i>.ext1;mime-type1;.ext2;mime-type2;...;.extN;mime-typeN</i>"</b></div></td></tr>
+<tr><td colspan=2><center><b>Virtual hosts and virtual directory</b></center>
+Web root dir for specific hostname. You may add many hosts with its own folder.
+You may add many virtual <i><b>/</b>directory<b>/</b></i> common for all hosts. "
+The name of virtual directory is to be between two forward-slash (/).
+<div align=right><b>hostpath="<i>hostname;path</i>"</b><br>Key may be repeated more then once.</div></td></tr>
+<tr align=center bgcolor=#c0fff8><td colspan=2><b>Proxy server</b></td></tr>
+<tr><td><b>Disable HTTP proxy.</b></td><td><b>noproxy</b></td></tr>
+<tr><td><b>TCP/IP port for proxy server.</b></td><td><b>proxy=</b><i>#port</i></b></td></tr>
+<tr><td><b>Number of proxy requests working simultaneous.</b></td><td><b>proxy_max=</b><i>#max</i></b></td></tr>
+<tr><td><b>IPs that can access this server. Separe single IP by comma and IP ranges with hyphens.</td><td><b>proxy_range={#.#.#.#[-#.#.#.#],}</b></td></tr>
+<tr><td><b>Deny IPs that can't access this server. Separe single IP by comma and IP ranges with hyphens.</td><td><b>proxy_deny={#.#.#.#[-#.#.#.#],}</b></td></tr>
+<tr><td><b>Do not save proxy cache to hard disk.</b></td><td><b>noproxy_dir</b></td></tr>
+<tr><td><b>Proxy cache directory.</b></td><td><b>proxy_dir=<i>path</i></b></td></tr>
+<tr><td><b>For how many days files will be saved.</b> Proxy can delete downloaded files from cache proxy directory after
+several days of last download.
+In any case, if user press "Reload" button files download again.</td><td><b>proxy_time=<i>#days</i></b></td></tr>
+<tr><td><b>Ignore NO-CACHE in control headers of the pages.</b>
+HTTP protocol has an opportunity to disable caching for page. Often site holders use this option to calculate the number of vistors.
+In any case, if user press "Reload" button files download again.</td><td><b>ignocache</b></td></tr>
+<tr><td><b>Proxy for avtorized users only.</b> Proxy will be available for defined users with proxy access flag only</td><td><b>proxyusers</b></td></tr>
+<tr align=center bgcolor=#c0fff8><td colspan=2><b>DNS server</b></td></tr>
+<tr><td><b>Hosts file.</b> See also <a href=#D>format of this file</a></td><td><b>hosts=</b><i>hosts_file</i></b></td></tr>
+<tr><td><b>Disable DNS server.</b></td><td><b>nohosts</b></td></tr>
+<tr><td><b>Disable recursion.</b></td><td><b>noreqursion</b></td></tr>
+<tr><td><b>Size of cache for names.</b> (in bytes)</td><td><b>dnscache</b></td></tr>
+<tr><td><b>Recursion call to higher level servers only.</b></td><td><b>dnsupl</b></td></tr>
+<tr><td><b>Return mailhost as host name, if MX record is not found.</b></td><td><b>dnsmx</b></td></tr>
+<tr><td><b>IPs that can access this server. Separe single IP by comma and IP ranges with hyphens.</td><td><b>dns_range={#.#.#.#[-#.#.#.#],}</b></td></tr>
+<tr><td><b>Deny IPs that can't access this server. Separe single IP by comma and IP ranges with hyphens.</td><td><b>dns_deny={#.#.#.#[-#.#.#.#],}</b></td></tr>
+<tr align=center bgcolor=#c0fff8><td colspan=2><b>To remote redirect server. Current IP notification</b></td></tr>
+<tr><td><b>URL on redirect server.</b> Full URL to update your IP address on dinamic DNS server. "$IP_ADDRESS" to insert your real IP address into URL.</td><td>
+<b>ddns=<i>url</i></b></td></tr>
+<tr><td><b>Time to re-confirm your IP on redirect server.</b></td><td><b>ddns_time=<i>#N</i></b></td></tr>
+<tr><td><b>Disable dynamic DNS.</b></td><td><b>noddns</b></td></tr></td></tr>
+<tr align=center bgcolor=#c0fff8><td colspan=2><b>FTP server</b></td></tr>
+<tr><td><b>Disable FTP server</b></td><td><b>noftp</b></td></tr>
+<tr><td><b>Number of simultaneous requests.</b></td><td><b>ftp_max=<i>max</i></b></td></tr>
+<tr><td><b>TCP/IP port for FTP server.</b> Usually it is 21</td><td><b>ftp_port=<i>port</i></b></td></tr>
+<tr><td><b>User session timeout. (in second)</b> Connection will close, if user is idle for this time.</td><td><b>ftp_timeout=<i>#N</i></b></td></tr>
+<tr><td><b>Name of upload subdirectory.</b>If FTP directory contents this subdirectory, users with \"read only\" access can
+still upload files here. E.g. /pub/"</td><td><b>ftp_upload=<i>"/dir/"</i></b></td></tr>
+<tr><td><b>Enable virtual directories for FTP.</b></td><td><b>ftp_vdirs</b></td></tr>
+<tr align=center bgcolor=#c0fff8><td colspan=2><b>POP3 server setting</b></td></tr>
+<tr><td><b>Disable POP3 server.</b></td><td><b>nopop3</b></td></tr>
+<tr><td><b>Number of simultaneous requests.</b></td><td><b>pop3_max=<i>max</i></b></td></tr>
+<tr><td><b>TCP/IP port for POP3 server</b>. Usually it is 110</td><td><b>pop_port=<i>port</i></b></td></tr>
+<tr align=center bgcolor=#c0fff8><td colspan=2><b>SMTP server setting</b></td></tr>
+<tr><td><b>Disable SMTP server.</b></td><td><b>nosmtp</b></td></tr>
+<tr><td><b>Number of simultaneous requests.</b></td><td><b>smtp_max=<i>max</i></b></td></tr>
+<tr><td><b>SMTP server name.</b> (Domain name)</td><td><b>smtp_name=<i>your.domain.name</i></b></td></tr>
+<tr><td><b>Use all virtual hosts as alias domain name.</b></td><td><b>vhalias</b></td></tr>
+<tr><td><b>TCP/IP port for SMTP server.</b> Usually it's 25</td><td><b>smtp_port=<i>port</i></b></td></tr>
+<tr><td><b>Output path.</b> Directory to store messages before sending</td><td><b>smtp_out=<i>path</i></b></td></tr>
+<tr><td><b>Sent path.</b> Directory to store sent messages</td><td><b>smtp_sent=<i>path</i></b></td></tr>
+<tr><td><b>Error path.</b> Directory to store messages, on failed send</td><td><b>smtp_err=<i>path</i></b></td></tr>
+<tr><td><b>DNS server to get mail routing info.</b> (May be your default DNS server)</td><td><b>smtp_dns=<i>#.#.#.#</i></b></td></tr>
+<tr><td><b>Alow any "From" field.</b> Otherwise server will send message from <i>user_name</i>@<i>your.domain.name</i> only</td><td><b>smtp_any</b></td></tr>
+<tr><td><b>IPs that can access this server. Separe single IP by comma and IP ranges with hyphens.</td><td><b>smtp_range={#.#.#.#[-#.#.#.#],}</b></td></tr>
+<tr><td><b>Deny IPs that can't access this server. Separe single IP by comma and IP ranges with hyphens.</td><td><b>smtp_deny={#.#.#.#[-#.#.#.#],}</b></td></tr>
+<tr><td><b>Blacklist of E-mail addresses of spamers.</b>
+Separate addreses by space. Use *@host to block receiving from any address of this host)</td><td><b>blacklist="<i>u@adr1 *@adr2 ...</i>"</b></td></tr>
+<tr><td><b>Use instructions from the "forward" file in a user's directory.</b></td><td><b>forward</b></td></tr>
+<tr><td><b>Alow execution of applications from user's "forward" file.</b></td><td><b>fwdrun</b></td></tr>
+<tr><td colspan=2><center><b>Users</b></center>
+To give FTP, Mail, Administration access you must add users.
+<div align=right><b>user="<i>name;password;home_dir;type_of_access_flags</i>"</b>
+<br>Key may be repeated more then once.</div>
+<i>type_of_access_flags</i> -- It's sequence of next symbol:
+<ul>
+<li><b>F</b> -- FTP access -- user can read files from his home directory and any subdirectory via FTP.
+<li><b>W</b> -- FTP write access -- user can upload files to his home directory via FTP.
+<li><b>N</b> -- Disable upload files via cgi-ident in path.
+<li><b>S</b> -- SMTP. User can send messages via SMTP from <i>user_name</i>@<i>your.domain.name</i>
+<li><b>P</b> -- POP3. User will have mailbox. All messages to <i>user_name</i>@<i>your.domain.name</i>
+will stored in home/mbox directory and available via POP3.
+<li><b>A</b> -- <font color=#c01080>This is administrator.</font> -- He has full access to
+ administration's pages, can add users, change access rights etc...
+<li><b>H</b> -- Proxy. Access to proxy.
+
+</ul>
+For FTP access you can add <i>anonymous</i> user without password
+In this case just skip password. E.g.:
+<pre>
+user=anonymous;;c:\public;FWN
+user=ftp;;c:\readonly;F
+</pre></td></tr></table>
+
+<br>Please note that there shouldn't be spaces before and after "=". If a parameter
+you are entering contains spaces make sure that you put them in quotes. Here is an example of a
+correct command line:
+<br><b><tt><pre>http.exe port=1080 def=index.html php="C:\PROGRAM FILES\PHP\php.exe" nolog</pre></tt></b>
+Here is an example of configuration file:
+<b><tt><pre>
+log=C:\TEMP\http.log
+perl=C:\PERL\BIN\perlis.dll # supported !!!
+max=12 def=index.stm
+@www.cfg # include other configuration file
+hostpath=www.name.www;C:\www1
+hostpath=max.name.www;C:\www2
+# End of file
+</pre></tt></b><br><br>
+
+<p><a href=#C>Contents</a><hr><center><a name=h3><p></a><br><h2>Running scripts.</h2></center>
+
+Requested files that contents CGI identefer in pathname will be executed.
+CGI/1.1 standards are supported, for reference please consult
+<a href=http://Web.Golux.Com/coar/cgi/>http://Web.Golux.Com/coar/cgi/</a>.
+When running a script, request line parameters are transferred both in
+command line and in QUERY_STRING environment variable. The script transfers
+data directly to the client that requested it. A script should output
+Content-Type: <i>type</i>\r\n or Location: <i>url</i>. There could be some
+auxiliary lines like Content-Length: xx\r\n or Date:. These data end in
+\r\n\r\n. If you use C or Perl please note that in text mode output
+functions automatically transform \n to \r\n. Pascal writeln function also
+completes output with these symbols. (\r = [CR] = 0x0D; \n = [LF] = 0x0A )
+
+<p><a href=#C>Contents.</a><hr>
+<a name=S><p></a>
+<h2><center>Server Side Includes (SSI) </center></h2><p>
+<li type=circle>SSI can greatly increase your capabilities allowing you to
+dynamically insert results of CGI scripts in any place of a document being
+shown to the user.<br>
+<li type=circle> When a remote client requests a *.sht, *.shtm or *.shtml
+file, server returns it evaluating SSI tags which are contained there.<br>
+<li type=circle> SSI tags have the following format:<br>
+<b>&lt;!--#tag_name {variable="value" } --&gt;</b><br>
+<li type=circle> HTTP or <b> request form variables</b> can be put into
+the "value" field. Variable name starts with $ and can be later put in braces
+{} if you wish to concatenate the variable value with subsequent text
+(excepting spaces). For instance , $USER_AGENT contains browser type, and if
+you want to concatenate it with "_12345", use "${USER_AGENT}_12345". When
+using symbols like $, \, " make sure you place \ before them: $ - \$, \ - \\,
+" - \" etc. If a variable can't be evaluated, it replaced with the
+"undefined" value.
+<p>Current server version supports the following tags:
+<p><b>include</b><br>
+&lt;!--#include virtual="path/file_name" --&gt;<br>
+&lt;!--#include file="full_path/file_name" --&gt;<br>
+   Both variants include the content of file_name in the document. In first
+case it looks for the document from the web root directory, in the second
+case you can define a path for the document. If the requested document
+content <i>cgi_ident</i> in path, the server runs the file. If the file_name
+contains the "?" symbol, the string after it is transmitted as a request
+with parameters which should be processed by your script.
+
+<p><b>exec</b><br>
+&lt;!--#exec cgi="file_name" --&gt;<br>
+&lt;!--#exec cmd="file_name" --&gt;<br>
+Runs the script like with "include" tag, from  /<i>cgi_ident</i>/ subdirectory
+
+ <p><b>fsize & lastmod</b><br>
+&lt;!--#fsize virtual="path/file_name" --&gt;<br>
+&lt;!--#fsize file="full_path/file_name" --&gt;<br>
+&lt;!--#lastmod virtual="path/file_name" --&gt;<br>
+&lt;!--#lastmod file="full_path/file_name" --&gt;<br>
+ Shows file size and last modified date.
+ <p><b>echo </b><br>
+&lt;!--#echo var="var" --&gt;<br>
+ Prints variable value.
+ <p><b>printenv </b><br>
+&lt;!--#printenv --&gt;<br>
+ Outputs the values of all variables.
+ <p><b>break </b><br>
+&lt;!--#break --&gt;<br>
+ Breaks procession of the document.<br>
+ <p><b>if -- elif -- else -- endif</b><br>
+&lt;!--#if expr="expression" --&gt;<br>
+ <i> text </i><br>
+&lt;!--#elif expr="expression" --&gt;<br>
+ <i> text </i><br>
+&lt;!--#elif expr="expression" --&gt;<br>
+ <i> text </i><br>...<br>
+&lt;!--#else --&gt;<br>
+ <i> text </i><br>
+&lt;!--#endif --&gt;<br><br>
+The text will be either shown or not depending on the outcomes of specified
+conditions. The conditions can consist of variables and values as well as
+different logical operators between them:
+<br><br>
+ ! -- "Not"<br>
+ = or == -- "Equal to"<br>
+ != -- "Not equal to"<br>
+ &lt;,&gt;,&lt;=,&gt;= -- "Less than", "Greater than", "Less than or equal to",
+ "Greater than or equal to".<br>
+ ~ -- "Part of..."
+ <i>str1 ~ str2</i> -- the result is true, if the string <i>str2</i>
+ is the part of string <i>str1</i><br>
+ && --"AND"<br>
+ || --"OR"<br><br>
+<b>elif</b> and <b>else</b> operators can be omitted, <b>elif</b>
+can be repeated as many times as you need. It's necessary to put the
+<b>endif</b> tag at the end of your statements.
+ <p><b>set</b><br>
+&lt;!--#set var="variable" value="value" --&gt;<br>
+ Sets or changes the value of the variable. Although, try not to use this
+feature too often because the number of variables and memory allocated for
+them is somewhat restricted.
+
+<p><a href=#C>Contents</a><hr><center><a name=I><p></a>
+<br><h2>Internet Server Applications (ISAPI)</h2></center>
+ It is alternative to Common Gateway Interface Executable Files. The server
+will identify a file with a .DLL extension as a script to execute. For every
+client request, the <b>HttpExtensionProc</b> entry point is called. My
+realization of this interface have next features:
+<li>If <b>HttpExtensionProc</b> return 4 (HSE_STATUS_ERROR) or great
+then DLL will be unload.
+<li>When script call <b>WriteClient</b> the dwHttpStatusCode must
+content valid value or begins with HTTP/ and contents full HTTP reply.
+<li>The absentce of <b>GetExtensionVersion</b> is not an error.
+
+<p><a href=#C>Contents</a><hr><a name=P></a><center><br><h2>Proxy</h2></center><p>
+If hard disk cache enabled server will store all incomming files except
+authorized pages. Server can delete downloaded files from cache proxy directory after
+several days of last download. See also <a href=#H2>command line keys
+descriptions</a>
+
+<p><a href=#C>Contents</a><hr><a name=D></a><center><br><h2>DNS server</h2></center><p>
+
+This version content DNS server. To run you must specify <b>hosts</b> file.
+File has format on the one hand compatible with system hosts file and on
+the other hand may be alike with master file format recomended by RFC 1035.
+
+For compatible with system hosts file, each lines may content IP address
+and name of the host. Comments begin with symbol <b>'#'</b>. Domain name in
+this file could begin from '*.' to descript all subdomain.
+Example:<br>
+<pre>
+# Here is an example of hosts file for local network.
+
+192.168.1.21 www.max.local
+192.168.1.21 max.local
+192.168.1.20 *.max.local
+192.168.1.22 www.boss.local
+192.168.1.23 serg.local
+192.168.1.26 www.serg.local
+192.168.1.24 *.andy.local
+192.168.1.25 *.mary.local
+# etc ...
+
+# To create your own dialup network add last record:
+192.168.1.21 * # -- Redirect all unknown incoming request to 192.168.1.21
+
+# end of hosts file
+</pre>
+
+Also each line may content domain-name and RR description and comment may
+begin with ';' Next lines are supported:<br>
+$ORIGIN <i>&lt;domain-name&gt;</i><br>
+$TTL <i>&lt;validate-time&gt;</i> -- a 32 bit unsigned integer that specifies
+the time interval (in seconds) that the resource record may be cached before
+it should be discarded.<br>
+[<i>&lt;domain-name&gt;</i>] <i>&lt;blank&gt;</i> [<i>&lt;TTL-always-ignored&gt;</i>] IN <i>&lt;type&gt; &lt;RDATA&gt;</i><br>
+
+For domain description  unlike RFC recomendation you must
+direct full <i>&lt;domain-name&gt;</i> ('@' dosen't interpretate, last point may be skipped or
+present it's the same). You may skip <i>&lt;domain-name&gt;</i> in this case
+preveus name will be used. Unlike RFC recomendation you must
+direct  class "IN" for each line with RR format.
+<i>&lt;type&gt;</i> may be:
+<li> A  <i>&lt;IP-address&gt;</i> - a host address
+<li> NS <i>&lt;full-name&gt;</i> - an authoritative name server
+<li> CNAME <i>&lt;full-name&gt;</i> - the canonical name for an alias.  The 'A' record
+for original name MUST present in this file.
+<li> SOA <i>&lt;full-name&gt;</i> <i>&lt;e-mail by owner&gt;</i> (<i>&lt;SERIAL&gt;</i>,<i>&lt;REFRESH&gt;</i>,<i>&lt;RETRY&gt;</i>,<i>&lt;EXPIRE&gt;</i>,<i>&lt;MINIMUM&gt;</i>)
+ - marks the start of a zone of authority
+<li> MX <i>&lt;preference&gt;</i> <i>&lt;full-name&gt;</i> - mail exchange. <i>&lt;preference&gt;</i> is numbre
+from 1 to 255.  Lower values are preferred.
+<li> PTR <i>&lt;full-name&gt;</i> - a name. Host at left side must be #.#.#.#.in-addr.arpa
+
+<br> Other types are ignored.<br>
+Also for PTR requests, if PTR record not found, RDATA for reply server gives from
+first 'A' record with such IP, or from lines compatible with system hosts file.
+For each type of record domain-name may begin from wildcard '*.' to descrpibe all
+sub domains. Server supports '*' type of request to return all about domain. For
+domain with wildcard  reply also will content wildcard. For other types
+of request reply will be without wildcard.
+<p>Server may support reqursion call. To release resolving for any domain
+you MUST direct NS record for root servers. If you check "Recursion call to
+up level servers only" you must direct DNS server of your provider, instead
+root servers, and program will call only to these servers. Otherwise,
+server will call to different zone servers.
+
+Example:<br>
+<pre>
+# Here is an example of hosts file for export domain to Internet,
+# and resolve other names.
+
+; First, lines holds the information on root name servers needed to
+; initialize cache of Internet domain name servers
+
+.                  IN  NS a.root-servers.net
+a.root-servers.net IN  A  198.41.0.4
+.                  IN  NS b.root-servers.net
+b.root-servers.net IN  A  128.9.0.107
+.                  IN  NS c.root-servers.net
+c.root-servers.net IN  A  192.33.4.12
+.                  IN  NS d.root-servers.net
+d.root-servers.net IN  A  128.8.10.90
+.                  IN  NS e.root-servers.net
+e.root-servers.net IN  A  192.203.230.10
+.                  IN  NS f.root-servers.net
+f.root-servers.net IN  A  192.5.5.241
+.                  IN  NS g.root-servers.net
+g.root-servers.net IN  A  192.112.36.4
+.                  IN  NS h.root-servers.net
+h.root-servers.net IN  A  128.63.2.53
+
+; Now declare our domain
+
+$TTL 86400  ;TTL - 24 hours
+
+somedomain.net IN SOA  somedomain.net max@somedomain.net (
+ 2002120602 ; Serial
+ 36000      ; Refresh
+ 3000       ; Retry
+ 36000000   ; Expire
+ 36000      ; Minimum
+ )
+  IN NS   ns.somedomain.net
+  IN NS   ns2.somedomain.net
+  IN MX 1 relay1.somedomain.net
+  IN MX 2 relay2.somedomain.net
+  IN A 192.168.12.1
+
+ns.somedomain.net     IN A 192.168.12.1
+ns2.somedomain.net    IN A 192.168.12.2
+relay1.somedomain.net IN A 192.168.12.1
+relay2.somedomain.net IN A 192.168.12.2
+
+pc2.somedomain.net    IN A 192.168.12.2
+  IN NS   ns2.somedomain.net
+  IN MX 1 relay1.somedomain.net
+
+*.somedomain.net      IN A 192.168.12.1
+  IN NS   ns.somedomain.net
+  IN NS   ns2.somedomain.net
+  IN MX 1 relay1.somedomain.net
+  IN MX 2 relay2.somedomain.net
+
+
+; also this file may contents lines in next format:
+192.168.12.1 www.max.local
+192.168.12.2 max.local
+192.168.12.1 *.max.local
+
+# end of hosts file
+</pre>
+
+<br><br>See also <a href=#H2>command line keys descriptions</a>
+<hr><a name=M></a><center><br><h2>SMTP server</h2></center><p>
+SMTP server can:
+<li>Receive messages for defined users. Target address must be <i>user_name</i>@<i>your.domain.name</i>
+This messages store in user's home\mbox directory and it's available via POP3.
+<li>Receive messages from defined users for anybody. Source address must be <i>user_name</i>@<i>your.domain.name</i>
+You can enable to receive messages from anybody to anyone, and you can restrict remote IP range, for which this type of messages is enable.
+To get mail routing info, SMTP server asks DNS server. You must direct DNS IP in options.
+<li>You may add some spamers addresses into blacklist. Messages from these addresses will be never received.
+<li>You may enable server to check user's "forward" files, to redirect or percolate messages.<br>
+ File named "forward" could be placed into user's home directory. When option is
+enable server parses each line of this file and understands next instruction:
+<li><b>#if </b><i>expression</i> -- next lines will be checked if expression is true
+<li><b>#elif </b><i>expression</i> --  if previous condition is false then next lines will be checked if expression is true
+<li><b>#else</b> -- next lines will be checked if previous condition is false
+<li><b>#endif</b> -- end of conditions block
+<li><b>#mv</b> <i>where</i> -- move message
+<li><b>#cp</b> <i>where</i> -- copy message
+<li><b>#rm</b>  -- remove message
+<li><b>#</b> <i>anything</i> -- comment
+<li><b>!</b><i>d:\path\application {params}</i> -- execute
+"d:\path\application {params} users_home\mbox\name.msg". If executing is enable in options only.
+<li><i>to1<b>@</b>host1 {toN<b>@</b>hostN}</i> -- redirect message to this addresses.
+<br> The conditions can consist of variables (<b>$size_kb</b> -- size of message in KB;
+<b>$in_text(</b><i>text to find</i><b>)</b> -- is true if the text was found in the message;
+<b>$errorlevel</b> -- the value returned by last external script or zero if no successful runs before)
+and values as well as different logical operators between them:
+<br>
+! -- "Not"<br>
+= or == -- "Equal to"<br>
+!= -- "Not equal to"<br>
+&lt;,&gt;,&lt;=,&gt;= -- "Less than", "Greater than", "Less than or equal to",
+"Greater than or equal to".<br>
+is the part of string <i>str1</i><br>
+&& --"AND"<br>
+|| --"OR"<br><br>
+
+Space and back-slash (' \') at end of line mean continues current command
+at next line.
+<br>
+
+Example:<br>
+<pre>
+# Here is the example of forward file.
+
+#if  $in_text(boss@address)
+!d:\perl\bin\perl.exe autoreply.pl
+#endif
+
+#if $in_text(100% FREE)
+#mv c:\probably\spam
+#elif $size_kb<=20 && ! ( $in_text(boss@address) || $in_text(@private.address) || $in_text(do not redirect) )
+#cp c:\probably\importan
+my_home@address my_seccond_address@yahoo.com
+#else
+!d:\perl\bin\perl.exe check.pl
+#endif
+
+# End of forward file
+</pre>
+<li> Antivirus script have same format as forward file, but unlike
+forward file it checking before sending each message.
+Example:<br>
+<pre>
+# Here is the example of antivirus file.
+
+#if  $in_text(Content-Transfer-Encoding: base64) && $in_text(TVqQAAMA)
+
+#if $in_text(.pif)
+#mv c:\probably\virus
+#else
+!c:\DrWeb\drweb386.exe
+#endif
+
+#elif $in_text(&lt;script language=) && $in_text(&lt;!DOCTYPE HTML)
+#mv c:\probably\spam
+#endif
+
+# End of file
+</pre>
+
+
+See also <a href=#H2>command line keys descriptions</a>
+
+
+<hr><a name=P></a><center><br><h2>POP3 server & proxy</h2></center><p>
+POP3 server provide access to incomming mail. If POP3 proxy is enabled
+then users may option their E-mail client's program to get mail from
+another remote POP3 through this POP3. For it, <i>user</i> option in client's program must be:
+<i><b>local_user@remote_user@remote_host</b></i><br>
+Password must be: <i><b>local_password@remote_password</b></i><br>
+Or <i>@remote_password</i> part may be added to <i>user</i> option.
+Anywhere instead <b>'@'</b> may be used <b>'#'</b>.
+
+<hr><a name=F></a><center><br><h2>FTP server & proxy</h2></center><p>
+FTP server provide access to home directories of users and if option
+"Enable virtual directories for FTP" is selected then provide access
+to <b>private</b> virtual directories.  Public virtual directories
+are unavilable through FTP.<br>
+
+If FTP proxy is enabled
+then users may option their FTP client's program to work with
+remote FTP through this FTP. For it, <i>user</i> option in client's program must be:
+<i><b>local_user@remote_user@remote_host</b></i><br>
+Password must be: <i><b>local_password@remote_password</b></i><br>
+Or <i>@remote_password</i> part may be added to <i>user</i> option.
+Anywhere instead <b>'@'</b> may be used <b>'#'</b>.
+
+<br> Some FTP clients (e.g. FTP plugin for Far manager) support alike type of
+FTP proxy. In this cliens you may option firewall setting to
+your_host:FTP_port, and dirrect FTP URL like this:
+ftp://local_user#remote_user:local_password#remote_password@ftp_host/
+
+
+<hr><a name=T></a><center><br><h2>TLS/SSL server</h2></center><p>
+The server doesn't content real buildin TLS/SSL cryptographic functions,
+but includes interface to connect external TLS/SSL library. You may
+connect <a href=http://www.OpenSSL.org>OpenSSL</a> or
+<a href=http://www.gnutls.org>GNU TLS</a> to the server. Simple
+DLL based on OpenSSL 0.9.6j avilable here:
+<a href=http://mf.inc.ru/seclib.zip>seclib.zip</a>
+
+
+
+
+<p><a href=#C>Contents</a><hr><a name=L><p></a><center><br><h2>Conclusion</h2></center>
+Finally I want to pay my deepest respect to the GNU C++ compiler
+programmers. It was that compiler that compiled this program. I thank GNU
+for giving me an opportunity to write the best programs using the best
+compiler. You can visit GNU resources:
+<li><A href=http://www.delorie.com/djgpp/>DJGPP</a> --
+home page of translation GNU GCC into DOS.<br> <FONT SIZE=-1>
+I used this version, my libraries calling WIN32 API and my program
+building Windows PE *.exe from COFF a.out</font><br>
+<li><A href=http://www.gnu.org/>GNU</a> -- GNU itself.
+<br><br><br>
+<P ALIGN=RIGHT><a href=mailto:max@mf.inc.ru><i>M. Feoktistov</i></a><p>
+<hr><p><a href=#C>Contents</a><hr>
+</body></html>
+

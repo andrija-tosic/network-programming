@@ -1,0 +1,3 @@
+﻿  parity_main.cpp
+D:\Desktop\network-programming\HTTPServer\ParityCGI\parity_main.cpp(59,13): warning C4244: 'initializing': conversion from 'std::streamoff' to 'long', possible loss of data
+  ParityCGI.vcxproj -> D:\Desktop\network-programming\HTTPServer\shttps\www\cgi-bin\ParityCGI.exe
